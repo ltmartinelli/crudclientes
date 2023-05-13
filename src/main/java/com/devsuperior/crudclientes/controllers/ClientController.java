@@ -1,15 +1,18 @@
 package com.devsuperior.crudclientes.controllers;
 
 import com.devsuperior.crudclientes.dto.ClientDTO;
+import com.devsuperior.crudclientes.entities.Client;
 import com.devsuperior.crudclientes.services.ClientService;
+import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/clients")
@@ -28,6 +31,13 @@ public class ClientController {
         return ResponseEntity.ok(clientService.findAll(pageable));
     }
 
+    @PostMapping()
+    public ResponseEntity<ClientDTO> insert(@Valid @RequestBody ClientDTO clientDTO) {
+        clientDTO = clientService.insert(clientDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(clientDTO.getId()).toUri();
+        return ResponseEntity.created(uri).body(clientDTO);
+    }
 
 
 }
