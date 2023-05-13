@@ -10,14 +10,14 @@ public class ClientDTO {
 
     private Long id;
 
-    @NotBlank(message = "O campo não pode ser vazio")
+    @NotBlank(message = "Campo não pode estar vazio")
     private String name;
 
     private String cpf;
 
     private Double income;
 
-    @PastOrPresent(message = "A data de nascimento não pode ser uma data futura")
+    @PastOrPresent(message = "Data futura não permitida")
     private LocalDate birthDate;
 
     private Integer children;
@@ -64,15 +64,4 @@ public class ClientDTO {
         return children;
     }
 
-    @Override
-    public String toString() {
-        return "ClientDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", income=" + income +
-                ", birthDate=" + birthDate +
-                ", children=" + children +
-                '}';
-    }
 }
