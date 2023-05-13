@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -16,12 +17,12 @@ public class ClientService {
     private ClientRepository clientRepository;
 
     @Transactional(readOnly = true)
-    public ClientDTO findById(Long id){
+    public ClientDTO findById(Long id) {
         return new ClientDTO(clientRepository.findById(id).get());
     }
 
     @Transactional(readOnly = true)
-    public Page<ClientDTO> findAll(Pageable pageable){
+    public Page<ClientDTO> findAll(Pageable pageable) {
         Page<Client> result = clientRepository.findAll(pageable);
         return result.map(x -> new ClientDTO(x));
     }
@@ -35,13 +36,17 @@ public class ClientService {
     }
 
     @Transactional
-    public ClientDTO update(Long id, ClientDTO clientDTO){
+    public ClientDTO update(Long id, ClientDTO clientDTO) {
         Client client = clientRepository.getReferenceById(id);
-        copyDTOtoClient(clientDTO,client);
+        copyDTOtoClient(clientDTO, client);
         client = clientRepository.save(client);
         return new ClientDTO(client);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void delete(Long id) {
+        clientRepository.deleteById(id);
+    }
 
 
     private void copyDTOtoClient(ClientDTO clientDTO, Client client) {
