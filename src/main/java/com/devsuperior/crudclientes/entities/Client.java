@@ -2,7 +2,6 @@ package com.devsuperior.crudclientes.entities;
 
 import com.devsuperior.crudclientes.dto.ClientDTO;
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity

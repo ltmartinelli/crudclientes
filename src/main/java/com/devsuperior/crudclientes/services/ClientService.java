@@ -62,7 +62,6 @@ public class ClientService {
 
     }
 
-
     private void copyDTOtoClient(ClientDTO clientDTO, Client client) {
         client.setName(clientDTO.getName());
         client.setCpf(clientDTO.getCpf());
