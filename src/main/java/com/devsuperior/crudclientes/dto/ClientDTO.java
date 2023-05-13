@@ -7,6 +7,8 @@ import java.time.LocalDate;
 
 public class ClientDTO {
 
+    //Attributes
+
     private Long id;
 
     @NotBlank(message = "Campo não pode estar vazio")
@@ -20,6 +22,8 @@ public class ClientDTO {
     private LocalDate birthDate;
 
     private Integer children;
+
+    //Constructors
 
     public ClientDTO(Long id, String name, String cpf, Double income, LocalDate birthDate, Integer children) {
         this.id = id;
@@ -38,6 +42,8 @@ public class ClientDTO {
         birthDate = client.getBirthDate();
         children = client.getChildren();
     }
+
+    //Getters
 
     public Long getId() {
         return id;

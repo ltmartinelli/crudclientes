@@ -58,8 +58,6 @@ public class ClientService {
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("Recurso não encontrado");
         }
-
-
     }
 
     private void copyDTOtoClient(ClientDTO clientDTO, Client client) {

@@ -8,6 +8,8 @@ import java.time.LocalDate;
 @Table(name = "tb_client")
 public class Client {
 
+    //Attributes
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,6 +23,8 @@ public class Client {
     private LocalDate birthDate;
 
     private Integer children;
+
+    //Constructors
 
     public Client() {
     }
@@ -41,6 +45,8 @@ public class Client {
         birthDate = clientDTO.getBirthDate();
         children = clientDTO.getChildren();
     }
+
+    //Getters & Setters
 
     public Long getId() {
         return id;
@@ -89,6 +95,8 @@ public class Client {
     public void setChildren(Integer children) {
         this.children = children;
     }
+
+    //ToString
 
     @Override
     public String toString() {
