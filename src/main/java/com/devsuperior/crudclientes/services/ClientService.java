@@ -3,9 +3,11 @@ package com.devsuperior.crudclientes.services;
 import com.devsuperior.crudclientes.dto.ClientDTO;
 import com.devsuperior.crudclientes.entities.Client;
 import com.devsuperior.crudclientes.repositories.ClientRepository;
+import com.devsuperior.crudclientes.services.exceptions.DatabaseException;
 import com.devsuperior.crudclientes.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,11 +55,14 @@ public class ClientService {
 
     @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id) {
+        if (!clientRepository.existsById(id))
+            throw new ResourceNotFoundException("Recurso não encontrado");
         try {
             clientRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException("Recurso não encontrado");
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Falha de integridade referencial");
         }
+
     }
 
     private void copyDTOtoClient(ClientDTO clientDTO, Client client) {
